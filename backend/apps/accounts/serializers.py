@@ -6,9 +6,10 @@ class RegisterUserSerializer(serializers.ModelSerializer):
     """
     Serializer for registering a new user.
 
-    Responsibilities:
-    - Validate incoming registration data
-    - Create a new user with a hashed password
+    Performs:
+    - Required field validation
+    - Password length validation
+    - Unique username validation
     """
 
     password = serializers.CharField(write_only=True, min_length=8)
@@ -17,15 +18,20 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         model = User
         fields = ("username", "email", "password")
 
+    def validate_username(self, value):
+        """
+        Ensure the username is unique.
+        """
+        if User.objects.filter(username=value).exists():
+            raise serializers.ValidationError("Username already exists.")
+        return value
+
     def create(self, validated_data):
         """
-        Create and return a new user instance.
-
-        Password is securely hashed before saving.
+        Create and return a new user with a hashed password.
         """
-        user = User.objects.create_user(
+        return User.objects.create_user(
             username=validated_data["username"],
-            email=validated_data["email"],
+            email=validated_data.get("email", ""),
             password=validated_data["password"],
         )
-        return user
