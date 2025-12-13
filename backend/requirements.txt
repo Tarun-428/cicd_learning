@@ -6,3 +6,4 @@ pytest
 pytest-django
 gunicorn
 python-dotenv
+django-cors-headers
