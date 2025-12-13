@@ -88,3 +88,53 @@ def test_registration_fails_when_required_fields_missing():
     response = client.post("/api/auth/register/", payload, format="json")
 
     assert response.status_code == 400
+
+@pytest.mark.django_db
+def test_user_can_login_with_valid_credentials():
+    """
+    Test that a registered user can log in with valid credentials.
+    Expected behavior:
+    - API returns HTTP 200
+    - Response contains username
+    """
+
+    client = APIClient()
+
+    # Register user first
+    register_payload = {
+        "username": "loginuser",
+        "email": "login@example.com",
+        "password": "StrongPassword123"
+    }
+    client.post("/api/auth/register/", register_payload, format="json")
+
+    # Login
+    login_payload = {
+        "username": "loginuser",
+        "password": "StrongPassword123"
+    }
+
+    response = client.post("/api/auth/login/", login_payload, format="json")
+
+    assert response.status_code == 200
+    assert response.data["username"] == "loginuser"
+
+
+@pytest.mark.django_db
+def test_login_fails_with_invalid_credentials():
+    """
+    Test that login fails with incorrect password.
+    Expected behavior:
+    - API returns HTTP 401
+    """
+
+    client = APIClient()
+
+    payload = {
+        "username": "invaliduser",
+        "password": "WrongPassword"
+    }
+
+    response = client.post("/api/auth/login/", payload, format="json")
+
+    assert response.status_code == 401
