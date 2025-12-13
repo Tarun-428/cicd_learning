@@ -1,3 +1,22 @@
+
 venv/
+__pycache__/
 .pytest_cache/
+*.pyc
+.env
+
+# Django
 db.sqlite3
+staticfiles/
+
+# Node / Frontend
+node_modules/
+dist/
+build/
+
+# Vite
+.vite/
+
+# OS
+.DS_Store
+Thumbs.db
