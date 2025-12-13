@@ -67,25 +67,8 @@ CSS / Tailwind (UI)
 
 Responsive Design (Mobile, Tablet, Desktop)
 
-## 📂 Project Structure
-Sweet_Shop_Management/
-│
-├── backend/
-│   ├── apps/
-│   │   ├── accounts/        # Auth, JWT, permissions
-│   │   └── sweets/          # Sweets & inventory
-│   ├── tests/               # pytest test cases
-│   ├── sweetshop/           # Project config
-│   └── requirements.txt
-│
-├── frontend/
-│   ├── src/
-│   ├── public/
-│   └── package.json
-│
-└── README.md
 
-🧪 Test-Driven Development (TDD)
+## 🧪 Test-Driven Development (TDD)
 
 This project strictly follows Red → Green → Refactor:
 
