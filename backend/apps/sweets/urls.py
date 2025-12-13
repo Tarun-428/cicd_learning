@@ -1,6 +1,7 @@
 from django.urls import path
-from apps.sweets.views import SweetListView
+from apps.sweets.views import SweetListCreateView
 
 urlpatterns = [
-    path("", SweetListView.as_view(), name="sweet-list"),
+    path("", SweetListCreateView.as_view(), name="sweet-list-create"),
+    
 ]
