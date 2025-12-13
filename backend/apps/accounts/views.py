@@ -29,3 +29,34 @@ class RegisterUserView(APIView):
             )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+from apps.accounts.serializers import LoginUserSerializer
+
+
+class LoginUserView(APIView):
+    """
+    API endpoint for user login.
+
+    POST:
+    - Validates username and password
+    - Returns user details if authentication succeeds
+    """
+
+    def post(self, request):
+        serializer = LoginUserSerializer(data=request.data)
+
+        if serializer.is_valid():
+            user = serializer.validated_data["user"]
+            return Response(
+                {
+                    "username": user.username,
+                    "email": user.email,
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        return Response(
+            {"detail": "Invalid credentials"},
+            status=status.HTTP_401_UNAUTHORIZED,
+        )
