@@ -1,0 +1,30 @@
+name: CD Pipeline
+
+on:
+  workflow_run:
+    workflows: ["CI Pipeline"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+    - name: Set up SSH key
+      run: |
+        echo "${{ secrets.EC2_KEY }}" > ~/sweet-shop-cicd.pem
+        chmod 400 ~/sweet-shop-cicd.pem
+
+    - name: Deploy to EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no \
+            -i ~/sweet-shop-cicd.pem \
+            ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+              cd /home/ubuntu/cicd_learning
+              git pull origin main
+              docker-compose down
+              docker-compose build
+              docker-compose up -d
+        EOF
