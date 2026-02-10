@@ -22,6 +22,7 @@ services:
       DB_PASSWORD: AEXAqYSdqTkOoCvnSKlCNbzAZKNxUvhz
       DB_HOST: caboose.proxy.rlwy.net
       DB_PORT: 12993
+      ALLOWED_HOSTS: "43.205.217.78,localhost,127.0.0.1"
     command: >
       sh -c "
       python manage.py migrate --noinput &&
