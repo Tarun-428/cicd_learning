@@ -61,7 +61,7 @@ services:
       - backend
     volumes:
       - ./sweet-shop-frontend:/usr/src/app
-    command: npm run dev
+    command: npm run start
 
   backend:
     image: tarungammaedge/sweet_backend:v2
