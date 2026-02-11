@@ -45,7 +45,7 @@ export default function SweetShopApp() {
     sweetQuantity: "",
   })
 
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://15.206.36.0:8000"
 
   useEffect(() => {
     const token = localStorage.getItem("access_token")
